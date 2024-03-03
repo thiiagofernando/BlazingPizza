@@ -14,7 +14,7 @@ namespace BlazingPizza.Controllers
             _db = db;
         }
 
-        [HttpGet("lista")]
+        [HttpGet]
         public async Task<IActionResult> GetSpecials()
         {
             var lista = (await _db.Specials.ToListAsync()).OrderByDescending(x => x.BasePrice).ToList();

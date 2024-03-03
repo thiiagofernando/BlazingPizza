@@ -5,8 +5,10 @@
 @inject OrderState OrderState
 
 
+
+
+
 <div class="main">
-  <h1>Blazing Pizzas</h1>
   <ul class="pizza-cards">
     @if (specials != null)
     {
@@ -67,6 +69,6 @@
 
   protected override async Task OnInitializedAsync()
   {
-    specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>(NavigationManager.BaseUri + "specials/lista");
+    specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>(NavigationManager.BaseUri + "specials");
   }
 }
