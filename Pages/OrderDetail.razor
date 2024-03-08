@@ -7,15 +7,15 @@
 <div class="main">
     @if (invalidOrder)
     {
-        <h2>Order not found</h2>
-        <p>We're sorry but this order no longer exists.</p>
+        <h2>Pedido não encontrado</h2>
+        <p>Lamentamos, mas este pedido não existe mais.</p>
     }
     else if (orderWithStatus == null)
     {
         <div class="track-order">
             <div class="track-order-title">
                 <h2>
-                  <text>Loading...</text>
+                  <text>Carregando...</text>
                 </h2>
                 <p class="ml-auto mb-0">
                     ...
@@ -28,7 +28,7 @@
         <div class="track-order">
             <div class="track-order-title">
                 <h2>
-                    Order placed @orderWithStatus.Order.CreatedTime.ToLongDateString()
+                    Pedido feito @orderWithStatus.Order.CreatedTime.ToLongDateString()
                 </h2>
                 <p class="ml-auto mb-0">
                     Status: <strong>@orderWithStatus.StatusText</strong>
@@ -42,7 +42,7 @@
                           <strong>
                               @(pizza.Size)"
                               @pizza.Special.Name
-                              (£@pizza.GetFormattedTotalPrice())
+                              (R$@pizza.GetFormattedTotalPrice())
                           </strong>
                       </p>
                   }

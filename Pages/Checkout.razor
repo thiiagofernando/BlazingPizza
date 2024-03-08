@@ -11,52 +11,63 @@
 
     <a href="" class="nav-tab active">
         <img src="img/pizza-slice.svg" />
-        <div>Get Pizza</div>
+        <div>Escolher uma pizza</div>
     </a>
 
     <a href="myorders" class="nav-tab">
         <img src="img/bike.svg" />
-        <div>My orders</div>
+        <div>Meus pedidos</div>
     </a>
 
 </div>
 
 <div class="main">
+     <EditForm Model=Order.DeliveryAddress OnSubmit=CheckSubmission>
     <div class="checkout-cols">
         <div class="checkout-order-details">
-            <h4>Review order</h4>
-            @foreach (var pizza in Order.Pizzas)
-            {
-                <p>
-                    <strong>
-                        @(pizza.Size)"
-                        @pizza.Special.Name
-                        (£@pizza.GetFormattedTotalPrice())
-                    </strong>
-                </p>
-            }
+            <h4>Itens do pedido</h4>
+            <OrderReview Order="Order" />
+        </div>
 
-            <p>
-                <strong>
-                    Total price:
-                    £@Order.GetFormattedTotalPrice()
-                </strong>
-            </p>
+        <div class="checkout-delivery-address">
+            <h4>Endereço de entrega</h4>
+                @if (isError)
+                {
+                    <div class="alert alert-danger">
+                        Por favor insira um nome e endereço.
+                    </div>
+                }
+            <AddressEditor Address="Order.DeliveryAddress" />
         </div>
     </div>
 
-    <button class="checkout-button btn btn-warning" @onclick="PlaceOrder" disabled=@isSubmitting>
-        Place order
+        <button class="checkout-button btn btn-warning" disabled=@isSubmitting>
+        Confirmar pedido
     </button>
+    </EditForm>
 </div>
 
 @code {
     Order Order => OrderState.Order;
     bool isSubmitting;
+    bool isError = false;
+
+    private async Task CheckSubmission(EditContext editContext)
+    {
+        isSubmitting = true;
+        var model = editContext.Model as Address;
+        isError = string.IsNullOrWhiteSpace(model?.Nome)
+            || string.IsNullOrWhiteSpace(model?.Telefone)
+            || string.IsNullOrWhiteSpace(model?.Cep);
+        if (!isError)
+        {
+            await PlaceOrder();
+        }
+        isSubmitting = false;
+    }
 
     async Task PlaceOrder()
     {
-        isSubmitting = true;
         var response = await HttpClient.PostAsJsonAsync($"{NavigationManager.BaseUri}orders", OrderState.Order);
         var newOrderId = await response.Content.ReadFromJsonAsync<int>();
         OrderState.ResetOrder();

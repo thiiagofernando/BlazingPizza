@@ -1,0 +1,43 @@
+﻿<div class="form-field">
+    <label>Nome:</label>
+    <div>
+        <InputText @bind-Value="Address.Nome" />
+    </div>
+</div>
+
+<div class="form-field">
+    <label>Telefone:</label>
+    <div>
+        <InputText @bind-Value="Address.Telefone" />
+    </div>
+</div>
+<div class="form-field">
+    <label>Cidade:</label>
+    <div>
+        <InputText @bind-Value="Address.Cidade" />
+    </div>
+</div>
+
+<div class="form-field">
+    <label>Bairro:</label>
+    <div>
+        <InputText @bind-Value="Address.Bairro" />
+    </div>
+</div>
+
+<div class="form-field">
+    <label>CEP:</label>
+    <div>
+        <InputText @bind-Value="Address.Cep" />
+    </div>
+</div>
+<div class="form-field">
+    <label>Ponto de referencia</label>
+    <div>
+        <InputText @bind-Value="Address.PontoReferencia" />
+    </div>
+</div>
+
+@code {
+    [Parameter] public Address Address { get; set; }
+}

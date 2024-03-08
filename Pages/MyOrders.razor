@@ -6,12 +6,12 @@
 <div class="main">
     @if (ordersWithStatus == null)
     {
-        <text>Loading...</text>
+        <text>Carregando...</text>
     }
     else if (!ordersWithStatus.Any())
     {
-        <h2>No orders placed</h2>
-        <a class="btn btn-success" href="">Order some pizza</a>
+        <h2>Nenhum pedido feito</h2>
+        <a class="btn btn-success" href="">Peça uma pizza</a>
     }
     else
     {
@@ -23,8 +23,8 @@
                         <h5>@item.Order.CreatedTime.ToLongDateString()</h5>
                         Items:
                         <strong>@item.Order.Pizzas.Count()</strong>;
-                        Total price:
-                        <strong>£@item.Order.GetFormattedTotalPrice()</strong>
+                        Preço total:
+                        <strong>R$@item.Order.GetFormattedTotalPrice()</strong>
                     </div>
                     <div class="col">
                         Status: <strong>@item.StatusText</strong>
@@ -33,7 +33,7 @@
                     {
                         <div class="col flex-grow-0">
                             <a href="myorders/@item.Order.OrderId" class="btn btn-success">
-                                Track &gt;
+                                Acompanhar &gt;
                             </a>
                         </div>
                     }

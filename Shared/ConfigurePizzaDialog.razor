@@ -8,20 +8,20 @@
         </div>
         <form class="dialog-body">
             <div>
-                <label>Size:</label>
+                <label>Tamanho:</label>
                 <input type="range" min="@Pizza." max="@Pizza.MaximumSize" step="1" @bind="Pizza.Size" @bind:event="oninput" />
                 <span class="size-label">
-                    @(Pizza.Size)" (£@(Pizza.GetFormattedTotalPrice()))
+                    @(Pizza.Size)" (R$ @(Pizza.GetFormattedTotalPrice()))
                 </span>
             </div>
         </form>
 
         <div class="dialog-buttons">
-            <button class="btn btn-secondary mr-auto" @onclick="OnCancel">Cancel</button>
+            <button class="btn btn-secondary mr-auto" @onclick="OnCancel">Cancelar</button>
             <span class="mr-center">
-                Price: <span class="price">@(Pizza.GetFormattedTotalPrice())</span>
+                Preço: <span class="price">@(Pizza.GetFormattedTotalPrice())</span>
             </span>
-             <button class="btn btn-success ml-auto" @onclick="OnConfirm">Order ></button>
+             <button class="btn btn-success ml-auto" @onclick="OnConfirm">Adicionar ></button>
         </div>
     </div>
 </div>
