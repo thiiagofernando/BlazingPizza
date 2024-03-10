@@ -16,13 +16,14 @@ namespace BlazingPizza
 
         public int OrderId { get; set; }
 
-        public PizzaSpecial Special { get; set; }   
+
+        public PizzaSpecial Special { get; set; } = new();
 
         public int SpecialId { get; set; }
 
         public int Size { get; set; }
 
-        public List<PizzaTopping> Toppings { get; set; }
+        public List<PizzaTopping> Toppings { get; set; } = [];
 
         public decimal GetBasePrice()
         {

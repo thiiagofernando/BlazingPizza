@@ -73,7 +73,7 @@
   {
     if (await JavaScript.InvokeAsync<bool>(
     "confirm",
-    $"""Do you want to remove the "{removePizza.Special!.Name}" from your order?"""))
+            $"""Você deseja remover "{removePizza.Special!.Name}" do seu pedido?"""))
     {
       OrderState.RemoveConfiguredPizza(removePizza);
     }

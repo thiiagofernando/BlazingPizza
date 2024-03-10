@@ -5,16 +5,16 @@ namespace BlazingPizza
     {
         public int Id { get; set; }
 
-        public string Nome { get; set; }
+        public string Nome { get; set; } = string.Empty;
 
-        public string Telefone { get; set; }
+        public  string Telefone { get; set; } = string.Empty;
 
-        public string PontoReferencia { get; set; }
+        public  string PontoReferencia { get; set; } = string.Empty;
 
-        public string Cidade { get; set; }
+        public  string Cidade { get; set; } = string.Empty;
 
-        public string Bairro { get; set; }
+        public  string Bairro { get; set; } = string.Empty;
 
-        public string Cep { get; set; }
+        public  string Cep { get; set; } = string.Empty;
     }
 }

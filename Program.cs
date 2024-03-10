@@ -1,4 +1,5 @@
 using BlazingPizza.Data;
+using BlazingPizza.Extensions;
 using BlazingPizza.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,4 +37,5 @@ using (var scope = scopeFactory.CreateScope())
         SeedData.Initialize(db);
     }
 }
+app.MapPizzaApi();
 app.Run();
