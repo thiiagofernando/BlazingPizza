@@ -14,11 +14,12 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
+    app.UseHsts();
 }
 
 app.UseStaticFiles();
 app.UseRouting();
-
+app.UseHttpsRedirection();
 app.MapRazorPages();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
@@ -35,7 +36,4 @@ using (var scope = scopeFactory.CreateScope())
         SeedData.Initialize(db);
     }
 }
-
-app.Run();
-
 app.Run();
