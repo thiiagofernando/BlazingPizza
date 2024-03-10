@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BlazingPizza.Enumerators;
+using BlazingPizza.Model.Extensoes;
 
 namespace BlazingPizza
 {
@@ -8,11 +8,11 @@ namespace BlazingPizza
         public readonly static TimeSpan PreparationDuration = TimeSpan.FromSeconds(10);
         public readonly static TimeSpan DeliveryDuration = TimeSpan.FromMinutes(1); // Unrealistic, but more interesting to watch
 
-        public Order Order { get; set; }
+        public Order Order { get; set; } = new();
 
-        public string StatusText { get; set; }
+        public string StatusText { get; set; } = string.Empty;
 
-        public bool IsDelivered => StatusText == "Entregue";
+        public bool IsDelivered => StatusText ==  StatusOrder.Entregue.ObterNome();
 
         public static OrderWithStatus FromOrder(Order order)
         {
@@ -23,15 +23,15 @@ namespace BlazingPizza
 
             if (DateTime.Now < dispatchTime)
             {
-                statusText = "Preparando";
+                statusText = StatusOrder.Preparando.ObterNome();
             }
             else if (DateTime.Now < dispatchTime + DeliveryDuration)
             {
-                statusText = "Saiu para entrega";
+                statusText = StatusOrder.SaiuParaEntrega.ObterNome();;
             }
             else
             {
-                statusText = "Entregue";
+                statusText = StatusOrder.Entregue.ObterNome();;
             }
 
             return new OrderWithStatus

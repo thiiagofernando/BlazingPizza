@@ -1,7 +1,9 @@
 @page "/myorders"
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
-
+@using BlazingPizza.Components
+@using BlazingPizza.Enumerators
+@using BlazingPizza.Model.Extensoes
 
 <div class="main">
     @if (ordersWithStatus == null)
@@ -15,40 +17,43 @@
     }
     else
     {
-        <div class="list-group orders-list">
-            @foreach (var item in ordersWithStatus)
-            {
-                <div class="list-group-item">
+        <PaginationComponent TItem="OrderWithStatus" Items="ordersWithStatus.OrderBy(o => o.Order.CreatedTime).ToList()"
+            ItemLabel='item => new($"{item.Order.CreatedTime:ddd, MMM. d, yyyy}")'>
+            <ItemContent>
+                <div class="list-group-item bg-secondary text-white">
                     <div class="col">
-                        <h5>@item.Order.CreatedTime.ToLongDateString()</h5>
+                        <h5>@($"{context.Order.CreatedTime:dddd, MMMM d, yyyy hh:mm tt}")</h5>
                         Items:
-                        <strong>@item.Order.Pizzas.Count()</strong>;
-                        Preço total:
-                        <strong>R$@item.Order.GetFormattedTotalPrice()</strong>
+                        <strong>@context.Order.Pizzas.Count</strong>
                     </div>
                     <div class="col">
-                        Status: <strong>@item.StatusText</strong>
+                        Status: <strong>@context.StatusText</strong>
                     </div>
-                    @if (@item.StatusText != "Delivered")
+                    @if (@context.StatusText != StatusOrder.Entregue.ObterNome())
                     {
                         <div class="col flex-grow-0">
-                            <a href="myorders/@item.Order.OrderId" class="btn btn-success">
-                                Acompanhar &gt;
+                            <a href="myorders/@context.Order.OrderId" class="btn btn-success">
+                                Acompanhar
                             </a>
                         </div>
                     }
                 </div>
-            }
-        </div>
+                <div class="list-group-item">
+                    <div class="col">
+                        <OrderReview Order="@context.Order" />
+                    </div>
+                </div>
+            </ItemContent>
+        </PaginationComponent>
     }
 </div>
 
 @code {
-    List<OrderWithStatus> ordersWithStatus = new List<OrderWithStatus>();
 
+    List<OrderWithStatus> ordersWithStatus = new List<OrderWithStatus>();
     protected override async Task OnParametersSetAsync()
     {
-      ordersWithStatus = await HttpClient.GetFromJsonAsync<List<OrderWithStatus>>(
-          $"{NavigationManager.BaseUri}orders");
+        ordersWithStatus = await HttpClient.GetFromJsonAsync<List<OrderWithStatus>>(
+        $"{NavigationManager.BaseUri}orders");
     }
 }
