@@ -14,6 +14,7 @@
         public string Description { get; set; } = string.Empty;
 
         public string ImageUrl { get; set; } = string.Empty;
+        public int? FixedSize { get; set; }
 
         public string GetFormattedBasePrice() => BasePrice.ToString("0.00");
     }

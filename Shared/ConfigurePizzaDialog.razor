@@ -8,8 +8,12 @@
         </div>
         <form class="dialog-body">
             <div>
-                <label>Tamanho:</label>
-                <input type="range" min="@Pizza." max="@Pizza.MaximumSize" step="1" @bind="Pizza.Size" @bind:event="oninput" />
+                @if (supportSizing)
+                {
+                    <label>Tamanho:</label>
+                    <input type="range" min="@Pizza.MinimumSize" max="@Pizza.MaximumSize" step="1" @bind="Pizza.Size"
+                        @bind:event="oninput" />
+                }
                 <span class="size-label">
                     @(Pizza.Size)" (R$ @(Pizza.GetFormattedTotalPrice()))
                 </span>
@@ -21,7 +25,7 @@
             <span class="mr-center">
                 Preço: <span class="price">@(Pizza.GetFormattedTotalPrice())</span>
             </span>
-             <button class="btn btn-success ml-auto" @onclick="OnConfirm">Adicionar ></button>
+            <button class="btn btn-success ml-auto" @onclick="OnConfirm">Adicionar ></button>
         </div>
     </div>
 </div>
@@ -30,4 +34,15 @@
     [Parameter] public Pizza Pizza { get; set; }
     [Parameter] public EventCallback OnCancel { get; set; }
     [Parameter] public EventCallback OnConfirm { get; set; }
+
+    bool supportSizing = true;
+
+    protected override void OnInitialized()
+    {
+        if (Pizza is { Special.FixedSize: not null })
+        {
+            Pizza.Size = Pizza.Special.FixedSize.Value;
+            supportSizing = false;
+        }
+    }
 }

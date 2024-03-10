@@ -71,10 +71,20 @@
 
   async Task RemovePizzaConfirmation(Pizza removePizza)
   {
-    if (await JavaScript.InvokeAsync<bool>(
-    "confirm",
-            $"""Você deseja remover "{removePizza.Special!.Name}" do seu pedido?"""))
+
+    var mensagemParametros = new 
     {
+      title = "Remover pizza?",
+      text = $"""Você deseja remover "{removePizza.Special!.Name}" do seu pedido?""",
+      icon = "warning",
+      buttons = new {
+        abort = new {text = "Não, deixe no meu pedido", value = false},
+        confirm = new {text = "Sim, Remova a pizza" , value = true}
+      },
+      dangerMode = true
+    };
+    
+    if(await JavaScript.InvokeAsync<bool>("swal", mensagemParametros)){
       OrderState.RemoveConfiguredPizza(removePizza);
     }
   }
